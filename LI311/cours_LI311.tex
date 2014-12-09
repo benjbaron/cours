@@ -1,0 +1,932 @@
+\documentclass[11pt,english,french]{scrreprt}
+\usepackage{lmodern}
+\usepackage{babel}
+\renewcommand{\familydefault}{\rmdefault}
+\usepackage[T1]{fontenc}
+\usepackage{ucs}
+\usepackage[utf8x]{inputenc}
+\usepackage[a4paper]{geometry}
+\geometry{verbose,tmargin=3cm,bmargin=3cm,lmargin=2cm,rmargin=2cm,headheight=2cm,footskip=2cm}
+\setlength{\parskip}{\smallskipamount}
+\setlength{\parindent}{0pt}
+
+\usepackage[titles]{tocloft}
+\usepackage{abstract}
+\usepackage{amsthm}
+\usepackage{booktabs}
+\usepackage{amsmath}
+\usepackage{amssymb}
+\usepackage[unicode=true, pdfusetitle,
+ bookmarks=true,bookmarksnumbered=false,bookmarksopen=false,
+ breaklinks=false,pdfborder={0 0 1},backref=false,colorlinks=false]
+ {hyperref}
+
+\makeatletter
+\usepackage{colortbl}
+\usepackage{color}
+\usepackage[dvipsnames]{xcolor}
+\usepackage{listings}
+\usepackage[calcwidth]{titlesec}
+\usepackage{fix-cm}
+\usepackage{multicol}
+\usepackage{wrapfig}
+\usepackage{graphicx}
+\graphicspath{{images/}}
+\usepackage[french,ruled,vlined]{algorithm2e}
+\SetAlgoProcName{Procédure}{proc}
+
+
+\theoremstyle{remark}
+  \newtheorem*{rem*}{Remarque}
+  \newtheorem*{ex*}{Exemple}
+\theoremstyle{definition}
+  \newtheorem*{def*}{Définition}
+  \newtheorem*{prop*}{Proposition}
+  \newtheorem*{lem*}{Lemme}
+  \newtheorem*{thm*}{Théorème}
+  \newtheorem*{not*}{Notation}
+  \newtheorem*{comp*}{Complexité}
+
+\definecolor{MyDarkBlue}{rgb}{0,0.08,0.45}
+
+\lstset{language=Java,
+	 	basicstyle=\small\ttfamily,
+		keywordstyle=\ttfamily\textcolor{RubineRed},
+		identifierstyle=,
+		commentstyle=\textcolor{OliveGreen},
+		columns=fullflexible,
+		stringstyle=\sffamily,
+		showstringspaces=false,numberstyle=\tiny, breaklines=true}
+
+\titleformat{\section}[hang]{\sffamily\bfseries}
+ {\Large\thesection}{12pt}{\Large}[{\titlerule[0.5pt]}]
+
+\titleformat{\subsection}[hang]{\sffamily\bfseries}
+ {\large\thesubsection}{12pt}{\large}
+
+\def\thickhrulefill{\leavevmode \leaders \hrule height 1pt\hfill \kern \z@}
+\renewcommand{\maketitle}{\begingroup%
+    \let\footnotesize\small
+    \let\footnoterule\relax
+    \parindent \z@
+    \reset@font
+    \begin{flushleft}
+      \huge \sffamily \bfseries\color{orange} \@title
+    \end{flushleft}
+    \hrule height 1pt
+    \begin{flushright}
+      \large\sffamily\color{MyDarkBlue}\@author
+    \end{flushright}
+  \endgroup%
+  \setcounter{footnote}{0}%
+}
+
+\AtBeginDocument{
+  \def\labelitemi{\normalfont\bfseries{--}}
+}
+\renewcommand{\abstractname}{Introduction}
+\renewcommand{\abstractnamefont}{\Large\sffamily\bfseries}
+\renewcommand{\absnamepos}{flushleft}
+
+\setlength{\cftbeforesecskip}{0.5ex}
+\setlength{\cftbeforepartskip}{2ex}
+\setlength{\cftsecindent}{1cm}
+\renewcommand{\cftsecfont}{\mediumsize \sffamily \bfseries}
+\renewcommand{\cftsecdotsep}{\cftdotsep}
+
+
+\setcounter{tocdepth}{1}
+
+\usepackage{remreset}
+\makeatletter 
+\@addtoreset{section}{part}
+\@addtoreset{section}{chapter} 
+\makeatother
+
+\def\@part[#1]#2{%
+      \ifnum \c@secnumdepth >\m@ne
+        \refstepcounter{part}%
+        \addcontentsline{toc}{part}{\thepart\hspace{1em}#1}%
+      \else
+        \addcontentsline{toc}{part}{#1}%
+      \fi
+      {\parindent \z@ \raggedright
+       \interlinepenalty \@M
+       \normalfont
+       \ifnum \c@secnumdepth >\m@ne
+         \Large \sffamily \bfseries \partname~\thepart
+         \par\nobreak
+       \fi
+       \huge \sffamily \bfseries #2%
+       \markboth{}{}\par}%
+      \nobreak
+      \vskip 5ex
+      \@afterheading}
+  \def\@spart#1{%
+      {\parindent \z@ \raggedright
+       \interlinepenalty \@M
+       \normalfont
+       \huge \sffamily \bfseries #1\par}%
+       \nobreak
+       \vskip 3ex
+       \@afterheading}
+
+\makeatother
+
+\makeatletter
+\def\@makechapterhead#1{%
+  \vspace*{10\p@}%
+  {\parindent \z@ \raggedright
+    \normalfont
+    \ifnum \c@secnumdepth >\m@ne
+      \if@mainmatter
+        %\huge\bfseries 
+        \scshape
+        \@chapapp\space \thechapter
+        \par\nobreak
+%        \vskip 20\p@
+      \fi
+    \fi
+    \interlinepenalty\@M
+    \Huge \bfseries \sffamily #1\par\nobreak
+    \vskip 40\p@
+  }}
+\def\@schapter#1{\if@twocolumn
+                   \@topnewpage[\@makeschapterhead{#1}]%
+                 \else
+                   \@makeschapterhead{#1}%
+                   \@afterheading
+                 \fi}
+\def\@makeschapterhead#1{%
+  \vspace*{10\p@}%
+  {\parindent \z@ \raggedright
+    \normalfont
+    \scshape
+    \interlinepenalty\@M
+    \Huge \bfseries \sffamily #1\par\nobreak
+    \vskip 40\p@
+  }}
+
+\makeatother
+
+
+\begin{document}
+\author{BARON Benjamin }
+\date{Le \today}
+
+\title{LI311 - Cours\\
+Algorithmique}
+
+
+\maketitle
+
+\chapter{Graphes} % (fold)
+
+\section{Graphe non orienté} % (fold)
+
+\begin{def*}[Graphe non orienté]
+	 Un graphe non orienté $G$ est défini par un couple $G=(S,\,A)$ où :\begin{itemize}
+		\item $S$ (ou $V$ -- \emph{vertices}) est un ensemble de sommets;
+		\item $A$ (ou $E$ -- \emph{edges}) un ensemble d'arêtes.
+	\end{itemize}
+\end{def*}
+
+\begin{def*}[Sommets adjacents]
+	Ensemble des sommets $\Gamma(u)$ adjacents à $u$ : 
+	\begin{displaymath}
+		\forall u\in V,\;\Gamma(u)=v\in V,\,{u,\,v}\in E
+	\end{displaymath}
+\end{def*}
+
+Degré d'un sommet $u$ : $d(u)=|\Gamma(u)|$
+
+Toute arête $e=\{u,\,v\}\in S$ est incidente à $u$ et $v$.
+
+\begin{def*}[Sous-graphe]
+	Un sous-graphe de $G=(S_G,\,A_G)$ est un graphe 
+	\begin{displaymath}
+		H=(S_H,\,A_H) \textrm{ tel que } S_H\subset S_G \textrm{ et } A_H\subseteq A_G
+	\end{displaymath}
+\end{def*}
+
+
+\begin{def*}[sous-graphe induit]
+	Le sous-graphe induit par un ensemble de sommets $V'\subset S_G$ est le sous-graphe $G'=(S',\,A')$ avec
+	\begin{displaymath}
+		E'=\left\{e=\{u,\,v\}\in A,\;u,\,v\in S'\right\}
+	\end{displaymath}
+\end{def*}
+
+\begin{def*}[Chaînes]
+	Une \emph{chaîne} est une séquence de sommets et d'arêtes :
+	\begin{displaymath}
+		\nu = v_1 e_1 v_2 e_2\dots v_n e_n v_{n+1}
+	\end{displaymath}
+	\begin{itemize}
+		\item $v_i\in S$ pour $i\in\{1,\,\dots,\,n+1\}$
+		\item $e_i = \{v_i,\,v_i+1\}\in A$ pour $i\in\{1,\,\dots,\,n\}$
+	\end{itemize}
+	
+	Une \emph{chaîne élémentaire} est une chaîne qui passe pas deux fois par le même sommet.
+	
+	Un \emph{cycle} est une chaîne $\nu$ telle que $v_{n+1}=v_1$.
+\end{def*}
+
+\begin{def*}[Graphe connexe]
+	Un graphe \emph{connexe} est tel que pour tout couple $(u,\,v)\in V^2$, il existe une chaîne entre $u$ et $v$.
+\end{def*}
+
+
+\section{Graphe orienté} % (fold)
+
+\begin{def*}[Graphe orienté]
+	Un graphe orienté $G$ est défini par un couple $G=(S,\,A)$ où :\begin{itemize}
+		\item $S$ est un ensemble de sommets ;
+		\item $A$ est un ensemble d'arcs.
+	\end{itemize}
+\end{def*}
+
+
+Pour tout sommet $u\in A$, on a :\begin{itemize}
+	\item Successeurs de $u$ : $\Gamma^+(u)=\{v\in S,\;(u,\,v)\in A\}$
+	\item Prédécesseurs de $u$ : $\Gamma^-(u)=\{v\in S,\;(v,\,u)\in A\}$
+	\item Demi-degré entrant de $u$ : $d^+(u) = |\Gamma^+(u)|$
+	\item Demi-degré sortant de $u$ : $d^-(u) = |\Gamma^-(u)|$
+	\item Degré de $u$ : $d(u) = d^+(u)+d^-(u)$
+\end{itemize}
+
+
+\begin{def*}[Chemins]
+	Un \emph{chemin} est une séquence de sommets et d'arcs :
+	\begin{displaymath}
+		\nu = v_1 e_1 v_2 e_2\dots v_n e_n v_{n+1}
+	\end{displaymath}
+	\begin{itemize}
+		\item $v_i\in S$ pour $i\in\{1,\,\dots,\,n+1\}$
+		\item $e_i = (v_i,\,v_i+1)\in A$ pour $i\in\{1,\,\dots,\,n\}$
+	\end{itemize}
+	
+	Un \emph{chemin élémentaire} est un chemin qui ne passe pas deux fois par le même sommet.
+
+	Un \emph{circuit} est un chemin $\nu$ tel que $v_{n+1}=v_1$.
+\end{def*}
+
+\begin{def*}[Composante fortement connexe]
+	Une composante fortement connexe d'un graphe orienté $G$ est un sous-graphe maximal $\hat{G}$ de $G$ tel que pour tout couple $(u,\,v)\in \hat{G}$, il existe un chemin de $u$ à $v$ \textbf{et} un chemin de $v$ à $u$.
+	
+	Un graphe est dit fortement connexe s'il est formé d'une seule composante fortement connexe. De manière générale, un graphe se décompose de manière unique comme union de composantes fortement connexes disjointes.
+\end{def*}
+
+\section{Arbres} % (fold)
+
+\begin{def*}[Arbre]
+	Soit $T=(S,\,S)$ un graphe non orienté. $T$ est un arbre si $T$ est connexe sans cycle.\\
+	Les propriétés suivantes sont équivalentes :
+	\begin{itemize}
+		\item $T$ est un arbre.
+		\item $T$ est minimal connexe : $\forall e\in A,\,T=(S,\,A\backslash \{e\})$ n'est pas connexe.
+		\item $T$ est maximal acyclique : $\forall \{x,\,y\}\in S$ non adjacents dans $T$, $T'=(S,\,A\cup \{x,\,y\})$ contient un cycle.
+		\item Entre deux sommets quelconques, il existe une chaîne unique.
+	\end{itemize}
+\end{def*}
+
+\begin{def*}[Arborescence]
+	Une arborescence est un graphe orienté $G=(S_G,\,A_G)$ construite à partir d'un arbre $T=(S,\,A)$ : \begin{itemize}
+		\item $S_G=S$
+		\item Soit $r\in S$. Les arcs de $A_G$ correspondent aux arêtes de $A$ orientées du sommet $r$ vers les feuilles.
+	\end{itemize}
+	$r$ est la racine de $G=(S_G,\,A_G)$. C'est l'unique sommet sans prédécesseur.
+\end{def*}
+
+\section{Propriétés sur les graphes} % (fold)
+
+\subsection{Représentation en mémoire des graphes} % (fold)
+
+\begin{def*}[Matrice sommet-arête $G=(S,\,A)$ non orienté]
+	Pour tout couple $(i,\,j)\in V\times A$, \begin{itemize}
+		\item $M[i,\,j]\in \{0,\,1\}$
+		\item $M[i,\,j]=1$ ssi $i$ incidente à $j$, 0 sinon.
+	\end{itemize}
+	
+	Complexité-mémoire : $\Theta(|S|\times |A|)$
+\end{def*}
+
+\begin{def*}[Liste d'adjacence $G=(S,\,A)$ non orienté]
+	Pour $i\in S$, $L[i]$ est la liste des sommets adjacents à $i$.
+	
+	Complexité-mémoire : $\Theta(\max(|S|,\,|A|))$
+\end{def*}
+
+\subsection{Propriétés} % (fold)
+
+\begin{prop*}
+	Soit $G$ un graphe non orienté, alors :
+	\begin{displaymath}
+		\sum_{v\in S}d(v) = 2\cdot|A|
+	\end{displaymath}
+\end{prop*}
+
+\begin{prop*}
+	Tout graphe à $n\geqslant 2$ sommets possède au moins deux sommets de même degré.
+\end{prop*}
+
+\begin{prop*}
+	Soit $G=(S,\,A)$ un graphe orienté, alors :
+	\begin{displaymath}
+		\sum_{v\in S}d^+(v) = \sum_{v\in S}d^-(v)=|A|
+	\end{displaymath}
+\end{prop*}
+
+\begin{lem*}[K\oe nig]
+	S'il existe une chaîne entre deux sommets $u$ et $v$, alors il existe une chaîne élémentaire entre $u$ et $v$ (Toute chaîne peut se résumer à une chaîne élémentaire).
+\end{lem*}
+
+\begin{prop*}
+	Soit $G=(S,\,A)$ un graphe non orienté tel que $\forall v\in S,\;d(v) \geqslant 2$, alors $G$ contient un cycle.
+\end{prop*}
+
+\begin{prop*}
+	Deux chaînes de longueur maximale dans un graphe connexe ont au moins un sommet en commun.
+\end{prop*}
+
+\begin{prop*}
+	Soit $G$ un graphe à $n$ sommets, $m$ arêtes et $k$ composantes connexes, alors :
+	\begin{displaymath}
+		n-k\leqslant m\leqslant \frac{1}{2}(n-k)(n-k+1)
+	\end{displaymath}
+\end{prop*}
+
+Soit $T=(S,\,A)$ un graphe non orienté. On a les propriétés :\begin{itemize}
+	\item Si $|A|\geqslant|S|$, alors $T$ contient un cycle.
+	\item Si $|A| < |S|-1$, alors $T$ n'est pas connexe.
+	\item Si $T$ est un arbre, alors $|A|=|S|-1$.
+\end{itemize}
+
+\chapter{Parcours de graphes} % (fold)
+
+\section{Parcours de graphes non orientés} % (fold)
+
+\subsection{Parcours générique} % (fold)
+
+\begin{def*}[Bordure]
+	Soit $G=(S,\,A)$ un graphe non orienté ($n$ sommets, $m$ arcs).
+	
+	La bordure de $T\subset S$, $B(T,\,G)$ est le sous-ensemble des sommets de $S\\T$ dont au moins un voisin est dans $T$.  
+\end{def*}
+
+\begin{not*}
+	Notations associées à une liste $L=(s_1,\,s_2,\,\dots,\,s_p)$ de sommets distincts :\begin{itemize}
+		\item $L[i\dots j]$ : la sous-liste $(s_i,\,\dots,\,s_j),\;1\leqslant i\leqslant j\leqslant p$
+		\item $G[i\dots j]$ : le sous-graphe de $G$ induit par $\{s_i,\,\dots,\,s_j\},\;1\leqslant i\leqslant j\leqslant p$
+	\end{itemize}
+\end{not*}
+
+\begin{def*}[Parcours d'un graphe non orienté $G=(S,\,A)$]
+	Liste $L=(s_1,\,s_2,\,\dots,\,s_p)$ des $n$ sommets de $G$ telle que pour tout $i\in\{2,\,\dots,\,n\}$, le sommet $s_i$ appartient à $B(L[1\dots i-1],\,G)$ si cette bordure n'est pas vide.		
+	
+	Si $B(L[1\dots i-1],\,G)$ est vide, alors $s_i$ est un point de régénération de $L$.\\
+	Par convention, $s_1$ est un point de régénération.
+\end{def*}
+
+\begin{rem*}
+	Etape $i$ du parcours : ajouter $s_i$ (nouveau sommet visité) à la sous-liste $L[1\dots i-1]$ des sommets déjà visités.
+\end{rem*}
+
+Un sommet de $L[1\dots i]$ est \emph{ouvert} s'il possède au moins un voisin non visité (ie. dans $L[i+1\dots n]$).\\
+Dans le cas contraire, il est \emph{fermé}.
+
+\begin{prop*}[Décomposition d'un parcours sur les composantes connexes]
+	Soit $L=(s_1,\,s_2,\,\dots,\,s_p)$ un parcours de $G$ ; et soient $(i_1,\,\dots,\,i_r)$ les indices des points de régénération de $L$.
+	\begin{itemize}
+		\item $G[i_1\dots i_2-1],\;G[i_2\dots i_3],\,\dots,\,G[i_r\dots n]$ sont les sous-graphes induits par les composantes connexes de $G$.
+		\item $L[i_1\dots i_2-1],\;L[i_2\dots i_3],\,\dots,\,L[i_r\dots n]$ sont les parcours des sous-graphes induits par les composantes connexes de $G$.
+	\end{itemize}
+\end{prop*}
+
+\begin{def*}[Graphe de choix]
+	Soit $L=(s_1,\,s_2,\,\dots,\,s_p)$ un parcours de $G$ connexe. Pour $i\geqslant 2$, chaque nouveau sommet $s_i$ visité possède au moins un voisin déjà visité (graphe connexe).
+	
+	Choisissons un tel voisin, noté $\textrm{père}_L(s_i)$.
+	
+	Le graphe partiel $F$ de $G$ constitué des $n-1$ arêtes $\{s_i,\,\textrm{père}_L(s_i\}$ est un graphe de choix de $L$.
+\end{def*}
+
+\begin{prop*}
+	Tout graphe de choix $F$ d'un parcours $L$ de $G$ connexe est un arbre couvrant de $G$.
+\end{prop*}
+
+\subsection{Parcours en largeur} % (fold)
+\begin{def*}[Parcours en largeur]
+	Soit $L=(s_1,\,s_2,\,\dots,\,s_p)$ un parcours de $G$.
+	
+	$L$ est un parcours en largeur de $G$ si tout sommet visité $s_i$, qui n'est pas un point de régénération, est voisin du \textbf{premier sommet visité ouvert} de $L[1\dots i-1]$.
+\end{def*}
+
+\begin{rem*}
+	Le sommet $\textrm{père}_L(s_i)$ est par convention le premier sommet visité ouvert de $L[1\dots i-1]$.
+\end{rem*}
+
+\begin{algorithm} 
+	\DontPrintSemicolon 
+	\Donnees{$G=(S,\,A)$ un graphe, $s$ premier sommet, $F$ une file, $L$ une liste, $VNV$ voisins non visités} 
+	\Res{$L$ : parcours en largeur de $G$} 
+	\Deb{
+		$L \longleftarrow \{s\}$\;
+		allouer et initialiser la file $F$\;
+		\lPour{$x\in S$}{
+			$VNV[x] \longleftarrow d_G(x)$\; 
+		}
+		\lPour{$x \in adj[s]$}{
+			$VNV[x] \longleftarrow VNV[x]-1$\;
+		}
+		\lSi{$VNV[s]>0$}{
+			\lstinline!Enfiler!$(s,\,F)$\;
+		}
+		
+		\Tq{$F \neq \varnothing$}{
+			$y \longleftarrow tête[F]$\;
+			\lTq{VNV[y]=0}{\lstinline!Defiler!$(F)$\;}
+			$z \longleftarrow$ voisin non visité de $F$ dans $L$\;
+			$L\longleftarrow L\cup \{z\}$\;
+			\lPour{$t\in adj[z]$}{
+				$VNV[t] \longleftarrow VNV[t]-1$\;
+			}
+			\lSi{$VNV[z]>0$}{
+				\lstinline!Enfiler!$(z,\,F)$\;
+			}
+			\Retour $L$
+		}
+	}
+	\caption{Parcours en largeur} 
+\end{algorithm}
+
+\begin{comp*}[Parcours largeur]
+	La complexité de l'algorithme de parcours en largeur est $O(n+m)$
+\end{comp*}
+
+\begin{prop*}[Décomposition sur les composantes connexes]
+		Soit $L=(s_1,\,s_2,\,\dots,\,s_p)$ un parcours en largeur de $G$ et soient $(i_1,\,\dots,\,i_r)$ les indices des points de régénération de $L$.
+		\begin{itemize}
+				\item $G[i_1\dots i_2-1],\;G[i_2\dots i_3],\,\dots,\,G[i_r\dots n]$ sont les sous-graphes induits par les composantes connexes de $G$.
+				\item $L[i_1\dots i_2-1],\;L[i_2\dots i_3],\,\dots,\,L[i_r\dots n]$ sont des parcours en largeur des sous-graphes induits par les composantes connexes de $G$.
+		\end{itemize}
+\end{prop*}
+
+\begin{prop*}[Distances minimales à l'origine du parcours]
+	Soit $L=(s_1,\,s_2,\,\dots,\,s_p)$ un parcours en largeur de $G$ connexe.
+	
+	Soient $s$ l'origine $s_1$ du parcours et $d(x)$ la longueur minimum d'une chaîne de $s$ à $x$.
+	
+	On a alors :\begin{itemize}
+		\item $d(s_1)\leqslant d(s_2)\leqslant\dots\leqslant d(s_n)$
+		\item $\forall i \in {2,\,\dots,\,n},\;d(\textrm{père}_L(s_i))+1$
+	\end{itemize}
+\end{prop*}
+
+\subsection{Parcours en profondeur} % (fold)
+\begin{def*}[Parcours en profondeur]
+	Soit $L=(s_1,\,s_2,\,\dots,\,s_p)$ un parcours de $G$.
+	
+	$L$ est un parcours en profondeur de $G$ si tout sommet visité $s_i$, qui n'est pas un point de régénération, est voisin du \textbf{dernier sommet visité ouvert} de $L[1\dots i-1]$.
+\end{def*}
+
+\begin{rem*}
+	Le sommet $\textrm{père}_L(s_i)$ est par convention le dernier sommet visité ouvert de $L[1\dots i-1]$.
+\end{rem*}
+
+\begin{algorithm} 
+	\DontPrintSemicolon 
+	\Donnees{$G=(S,\,A)$ un graphe, $s$ premier sommet, $P$ une pile, $L$ une liste, $VNV$ voisins non visités} 
+	\Res{$L$ : parcours en profondeur de $G$} 
+	\Deb{
+		$L \longleftarrow \{s\}$\;
+		allouer et initialiser la pile $P$\;
+		\lPour{$x\in S$}{
+			$VNV[x] \longleftarrow d_G(x)$\; 
+		}
+		\lPour{$x \in adj[s]$}{
+			$VNV[x] \longleftarrow VNV[x]-1$\;
+		}
+		\lSi{$VNV[s]>0$}{
+			\lstinline!Empiler!$(s,\,P)$\;
+		}
+		
+		\Tq{$P \neq \varnothing$}{
+			$y \longleftarrow tête[P]$\;
+			\lTq{VNV[y]=0}{\lstinline!Depiler!$(P)$\;}
+			$z \longleftarrow$ voisin non visité de $P$ dans $L$\;
+			$L\longleftarrow L\cup \{z\}$\;
+			\lPour{$t\in adj[z]$}{
+				$VNV[t] \longleftarrow VNV[t]-1$\;
+			}
+			\lSi{$VNV[z]>0$}{
+				\lstinline!Empiler!$(z,\,P)$\;
+			}
+			\Retour $L$
+		}
+	}
+	\caption{Parcours en profondeur} 
+\end{algorithm}
+
+\begin{comp*}[Parcours profondeur]
+	La complexité de l'algorithme de parcours en profondeur est $O(n+m)$
+\end{comp*}
+
+\begin{prop*}[Décomposition sur les composantes connexes de $G$]
+	Soit $L=(s_1,\,s_2,\,\dots,\,s_p)$ un parcours en profondeur de $G$ et soient $(i_1,\,\dots,\,i_r)$ les indices des points de régénération de $L$.
+	\begin{itemize}
+			\item $G[i_1\dots i_2-1],\;G[i_2\dots i_3],\,\dots,\,G[i_r\dots n]$ sont les sous-graphes induits par les composantes connexes de $G$.
+			\item $L[i_1\dots i_2-1],\;L[i_2\dots i_3],\,\dots,\,L[i_r\dots n]$ sont des parcours en profondeur des sous-graphes induits par les composantes connexes de $G$.
+	\end{itemize}
+\end{prop*}
+
+\begin{prop*}[Liste suffixe]
+	Soit $L=(s_1,\,s_2,\,\dots,\,s_p)$ un parcours en profondeur de $G$ et soit $F$ sa foret sous-jacente.
+	
+	Pour tout $1\leqslant i\leqslant n$, la liste suffixe $L[i\dots n]$ est un parcours en profondeur du sous-graphe $G[i\dots n]$ ; et sa forêt sous-jacente est le sous-graphe de $F$ induit par $\{s_i,\,\dots,\,n\}$.
+\end{prop*}
+
+\begin{prop*}[Absence d'arêtes transverses]
+	Soit $L=(s_1,\,s_2,\,\dots,\,s_p)$ un parcours en profondeur de $G$ et soit $F$ sa forêt sous-jacente.
+	
+	Si $\{s_i,\,s_j\},\; i < j$ est une arête non dans $F$, alors $s_j$ est un descendant de $s_i$ dans $F$.
+\end{prop*}
+
+\begin{procedure} 
+	\DontPrintSemicolon 
+	\Donnees{$G=(S,\,A)$ un graphe, $s$ premier sommet, $L$ liste des sommets visités} 
+	\Deb{
+		$L \longleftarrow L\cup\{s\}$\;
+		\Tq{$z\in adj[s],\;z\notin L$}{
+			\lstinline!ParcoursProfRec!$(G,\,z,\,L)$
+		}
+	}
+	\caption{ParcoursProfRec()} 
+\end{procedure}
+
+\section{Parcours de graphes orientés} % (fold)
+
+Soit $G=(S,\,A)$ un graphe orienté avec $n$ sommets et $m$ arcs.
+
+\begin{def*}[Bordure de $T\subset S$]
+	$B(T,\,G)$ est le sous-ensemble des sommets de $S\backslash T$ dont au moins un prédécesseur est dans $T$.
+\end{def*}
+
+\begin{def*}[Parcours d'un graphe $G=(S,\,A)$]
+	Liste $L=(s_1,\,s_2,\,\dots,\,s_n)$ des $n$ sommets de $G$ telle que pour tout $i\in\{1,\,\dots,\,n\},\; s_i\in B(L[1\dots i-1],\,G)$ si $B(L[1\dots i-1],\,G)\neq \varnothing$.
+\end{def*}
+
+\begin{rem*}
+	Soit $L=(s_1,\,\dots,\,s_n)$ un parcours de $G$. Si $B(L[1\dots i-1],\,G)=\varnothing$, alors $s_i$ est un point de régénération de $L$.
+	
+	Par convention, $s_1$ est un point de régénération.
+\end{rem*}
+
+\begin{thm*}[Points de régénération et décomposition]
+	Soit $L=(s_1,\,s_2,\,\dots,\,s_n)$ un parcours de $G$. Soient $(i_1,\,\dots,\,i_r)$ les indices des points de régénération de $L$. Considérons la décomposition de $L$ associée :
+	\[
+		L=L[i_1\dots i_2-1].L[i_2\dots i_3-1].\dots.L[i-r\dots n]
+	\]
+	\begin{itemize}
+		\item Pour tout $k\in\{1\dots r\}$, le $k^{\mathrm{ième}}$ point de régénération est une racine du sous-graphe $G[i_k\dots i_{k+1}-1]$.
+		\item $L[i_1\dots i_2-1],\,L[i_2\dots i_3-1],\,\dots,\,L[i_r\dots n]$ sont des parcours des sous-graphes respectifs $G[i_1\dots i_2-1],\,G[i_2\dots i_3-1],\,\dots,\,G[i_r\dots n]$
+	\end{itemize}
+\end{thm*}
+
+\begin{lem*}
+	Si $x\in L[i_k\dots i_{k+1}-1]$, alors tout successeur de $x$ appartient à $L[1..i_{k+1}-1]$.
+\end{lem*}
+
+\begin{def*}
+
+	Soit $L=(s_1,\,s_2,\,\dots,\,s_n)$ un parcours de $G$. Soit $(i_1,\,\dots ,\,i_r)$ les indices des points de régénération de $L$. Soit $F$ la forêt couvrante de $G$ associée à un graphe de choix de $L$.
+	
+	On établit la topologie suivante des arcs de $G$ :\begin{itemize}
+		\item Un arc de la forêt est un arc de $F$ ;
+		\item Un arc $(x,\,y)$ est \textbf{avant} si $y$ est un descendant de $x$ dans $F$;
+		\item Un arc $(x,\,y)$ est \textbf{arrière} si $x$ est un descendant de $y$ dans $F$;
+		\item Un arc $(x,\,y)$ est \textbf{transverse} si $x$ et $y$ ont un ancêtre commun dans $F$ distinct de $x$ ou de $y$;
+		\item Un arc $(x,\,y)$ est un \textbf{liaison} si $x$ et $y$ ne sont pas dans la même arborescence de la forêt $F$.
+	\end{itemize}
+\end{def*}
+
+\subsection{Parcours en largeur} % (fold)
+
+\begin{def*}[Parcours en largeur]
+	Soit $L=(s_1,\,s_2,\,\dots,\,s_n)$ un parcours de $G$.
+	
+	$L$ est un parcours en largeur de $G$ si pour tout sommet visité $s_i$, qui n'est pas un point de régénération, est successeur du premier sommet visité ouvert de $L[1\dots i-1]$.
+\end{def*}
+
+\begin{thm*}[Décomposition]
+	Soit $L=(s_1,\,\dots,\,s_n)$ un parcours en largeur de $G$. Soient $(i_1,\,\dots,\,i_r)$ les indices des points de régénération de $L$.
+	
+	$L[i_1\dots i_2-1],\,L[i_2\dots i_3-1,\,\dots,\,L[i_R\dots n]]$ sont les parcours en largeur des sous-graphes 	$G[i_1\dots i_2-1],\,G[i_2\dots i_3-1,\,\dots,\,G[i_R\dots n]]$.
+\end{thm*}
+
+\begin{thm*}[Plus courts chemins issus de l'origine du parcours]
+	Soit $s$ une racine de $G$. Soit $L=(s_1,\,\dots,\,s_n)$ un parcours en largeur de $G$ à partir de $s$ ($F$ ne contient alors qu'une seule arborescence).
+	
+	Notons $d(x)$ la longueur minimum d'un chemin de $s$ à $x$.
+	\begin{itemize}
+		\item $d(s_1)\leqslant\dots\leqslant d(s_n)$;
+		\item Pour $i\in\{2,\,\dots,\,n\},\;d(\textrm{père}_L(s_i))+1$
+	\end{itemize}
+\end{thm*}
+
+\subsection{Parcours en profondeur} % (fold)
+
+\begin{def*}[Parcours en profondeur]
+	Soit $L=(s_1,\,s_2,\,\dots,\,s_n)$ un parcours de $G$.
+	
+	$L$ est un parcours en profondeur de $G$ si tout sommet visité $s_i$, qui n'est pas un point de régénération, est successeur du dernier sommet visité ouvert de $L[1\dots i-1]$.
+\end{def*}
+
+\begin{thm*}[Décomposition]
+	Soit $L=(s_1,\,\dots,\,s_n)$ un parcours en profondeur de $G$. Soient $(i_1,\,\dots,\,i_r)$ les indices des points de régénération de $L$.
+	
+	$L[i_1\dots i_2-1],\,L[i_2\dots i_3-1,\,\dots,\,L[i_R\dots n]]$ sont les parcours en profondeur des sous-graphes 	$G[i_1\dots i_2-1],\,G[i_2\dots i_3-1,\,\dots,\,G[i_R\dots n]]$.
+\end{thm*}
+
+\begin{prop*}[Liste suffixe]
+	Soit $L=(s_1,\,\dots,\,s_n)$ un parcours en profondeur de $G$, et soit $F$ sa forêt sous-jacente.
+	
+	Pour tout $1\leqslant i\leqslant n$, la liste suffixe $L[i\dots n]$ est un parcours en profondeur du sous-graphe $G[i\dots n]$ et sa forêt sous-jacente est le sous-graphe de $F$ induit par $\{s_i,\,\dots,\,s_n\}$.
+\end{prop*}
+
+\begin{lem*}[Arcs transverses]
+	Soit $L=(s_1,\,s_2,\,\dots,\,s_n)$ un parcours en profondeur de $G$ et soit $F$ sa forêt sous-jacente.
+	
+	Si $(s_i,\,s_j)$ est un arc transverse, alors on a $i>j$.
+\end{lem*}
+
+\begin{lem*}[Sommets accessibles]
+	Soit $L=(s_1,\,\dots,\,s_n)$ un parcours en profondeur de $G$, et soit $F$ sa forêt sous-jacente.
+	
+	Si, après visite de $s_i$, il existe un chemin de sommets non visités (sauf $s_i$) de $s_i$ à $x$, alors $x$ est un descendant de $s_i$ dans $F$. 
+\end{lem*}
+
+\begin{prop*}[Existence de circuits]
+	Soit $L=(s_1,\,\dots,\,s_n)$ un parcours en profondeur et soit $F$ sa forêt sous-jacente.
+	
+	$G$ est sans circuit si, et seulement si il n'existe pas d'arc arrière pour $L$.
+\end{prop*}
+
+\begin{rem*}
+	Algorithme pour tester l'existence de circuit dans $G$ (variante d'un parcours en profondeur) :\\
+	On utilise une pile pour maintenir le chemin de $F$ de la racine au dernier sommet visité.\\
+	Pour chaque nouveau sommet, on teste si l'un de ses successeur est dans la pile.\\
+	Si oui, c'est donc un arc arrière et il existe un circuit.
+\end{rem*}
+
+\chapter{Chemins de coût minimum}
+
+Soit $G=(S,\,A)$ un graphe orienté à $n$ sommets et $m$ arcs ; soit $c\colon A\longrightarrow \mathbb{R}$ une fonction coût sur les arcs de $G$. Soient un sommet origine (source) $s$ et un sommet destination $p$.
+
+\begin{def*}[Coût d'un chemin]
+	Soit $l=(a_1,\,a_2,\,\dots,\,a_p)$ un chemin. Le coût de $l$, noté $c(l)$ est égal à la somme $\sum_{k\in\{1,\,\dots,\,p\}}c(a_k)$.
+\end{def*}
+
+\begin{prop*}
+	Il existe un chemin de $s$ à $p$ de coût minimum si, et seulement si $p$ est un descendant de $s$ dans $G$.	
+\end{prop*}
+
+\begin{def*}[Circuit absorbant]
+	Un circuit est absorbant si son coût est strictement négatif.
+\end{def*}
+
+\begin{prop*}
+	Soit $p$ un descendant de $s$ dans $G$.
+	
+	Si $G$ ne possède pas de circuit absorbant, alors il existe un chemin de coût minimum de $s$ à $p$ qui est élémentaire.
+\end{prop*}
+
+\begin{prop*}[Arborescence des chemins de coût minimum]
+	Soit $G=(S,\,A)$ un graphe et soit $c\colon A\longrightarrow \mathbb{R}$ une fonction coût appliquée sur les arcs de $G$. Soit $s$ un sommet de $G$ tel que $s$ est une racine de $G$. Supposons que $G$ ne possède pas de circuit absorbant.
+	
+	$G$ possède une arborescence couvrante $H$ de racine $s$ telle que pour tout sommet $x$ de $G$, le chemin de $s$ à $x$ dans $H$ est un chemin de coût minimum de $s$ à $x$ dans $G$.
+	
+	$H$ est appelée arborescence des chemins de coût minimum d'origine $s$.
+\end{prop*}
+
+\section{Algorithme de Bellman-Ford} % (fold)
+
+\begin{algorithm}[H]
+	\DontPrintSemicolon
+	\Deb{
+		$d^0(s)=0$\;
+		\lPourTous{sommets $x\neq s$}{
+			$d^0(x)\longleftarrow +\infty$\;
+		}
+		
+		\Pour{$k=1$ à $n$}{
+			$d^k(s)=0$\;
+			\lPourTous{sommets $x\neq s$}{
+				$d^k(x)\longleftarrow \min\{d^{k-1}(a^{-}+c(a)\mid a^{+}=x)$\;
+			}
+			\lSi{$\forall x\in S,\;d^k(x)=d^{k-1}$}{
+				stop : optimum\;
+			}
+		}
+		
+		\Si{$\exists x\in S,\;d^n(x)\neq d^{n-1}(x)$}{
+			Il n'existe pas de plus court chemin entre $s$ et $x$\;
+		}
+	}
+	\caption{Algorithme de Bellman-Ford}
+\end{algorithm}
+
+\begin{comp*}[Algorithme de Bellman-Ford]
+	Complexité temporelle en $\mathcal{O}(mn)$.\\
+	Complexité mémoire en $\mathcal{O}(n^2)$ (réduite en $\mathcal{O}(n)$ si l'on ne stocke que les valeurs de $d^k(x)$ et $d^{k-1}(x)$).
+\end{comp*}
+
+\section{Algorithme de Bellman} % (fold)
+
+\begin{algorithm}[H]
+	\Donnees{$G=(S,\,A)$ un graphe sans circuits ; 
+	$s$ : sommet racine de $G$ ; 
+	$c\colon A\longrightarrow \mathbb{R}$ fonction coût sur les arcs}
+	\DontPrintSemicolon
+	\Deb{
+		Liste topologique $L=(s_1,\,\dots,\,s_n)$ des sommets de $G$ telle que $s=s_1$\;
+		$d(s_1)\longleftarrow 0$\;
+		\lstinline!ouvrir!($s_1$)\;
+		\lPour{$k=2$ à $n$}{
+			$d(s_k)\longleftarrow +\infty$\;
+		}
+		
+		\Pour{$k=1$ à $n$}{
+			\PourTous{successeurs $y$ de $s_k$}{
+				\Si{$d(y)>d(s_k)+c(x,\,y)$}{
+					$d(y)\longleftarrow d(s_k)+c(s_k,\,y)$\;
+					\lstinline!ouvrir!($y$)\;
+				}
+			}
+			\lstinline!fermer!($s_k$)\;
+		}
+	}
+	\caption{Algorithme de Bellman}
+\end{algorithm}
+
+\begin{rem*}
+	Un sommet $x$ est dit fermé si son évaluation $d(x)$ décroit. Il est dit fermé à l'issue de la seconde boucle.
+\end{rem*}
+
+\begin{comp*}[Algorithme de Bellman]
+	Complexité temporelle en $\mathcal{O}(n+m)$
+\end{comp*}
+
+\section{Algorithme de Dijkstra} % (fold)
+
+\begin{algorithm}[H]
+	\Donnees{$G=(S,\,A)$ un graphe orienté ; 
+	$s$ : sommet racine de $G$ ; 
+	$c\colon A\longrightarrow \mathbb{R}$ fonction coût sur les arcs telle que $\forall (x,\,y)\in A,\;c(x,\,y)\geqslant 0$}
+	\DontPrintSemicolon
+	\Deb{
+		$d(s_1)\longleftarrow 0$\;
+		\lstinline!ouvrir!($s_1$)\;
+		\lPour{$k=2$ à $n$}{
+			$d(s_k)\longleftarrow +\infty$\;
+		}
+		
+		\Pour{$k=1$ à $n$}{
+			$x\longleftarrow$ sommet ouvert tel que $d(x)$ minimum\;
+			\PourTous{successeurs $y$ de $x$}{
+				\Si{$d(y)>d(x)+c(x,\,y)$}{
+					$d(y)\longleftarrow d(x)+c(x,\,y)$\;
+					\lstinline!ouvrir!($y$)\;
+				}
+			}
+			\lstinline!fermer!($s_k$)\;
+		}
+	}
+	\caption{Algorithme de Dijkstra}
+\end{algorithm}
+
+\begin{comp*}[Algorithme de Dijkstra]
+	Complexité temporelle : $\mathcal{O}(nm)$\\
+	Complexité temporelle en utilisant un tas : $\mathcal{O}((n+m)\log(n))$\\
+\end{comp*}
+
+\chapter{Arbre couvrant de coût minimum} % (fold)
+
+\begin{def*}[Arbre couvrant]
+	Soit $G=(S,\,A)$ un graphe non orienté connexe avec $n$ sommets et $m$ arêtes.
+	
+	Un arbre couvrant de $G$ est un graphe partiel de $G$ qui est un arbre.
+\end{def*}
+
+\begin{def*}[Coût d'un arbre couvrant $H$]
+	Soit $g=(S,\,A)$ un graphe connexe non orienté.
+	Soit $H$ un arbre courant de $G$ et soit $c\colon A\longrightarrow \mathbb{R}$ une fonction coût.
+	
+	Le coût de $H$, noté $c(H)$ est la sommet $\sum_{e\in H}c(e)$ de ses arêtes.
+\end{def*}
+
+\section{Algorithme générique} % (fold)
+
+\begin{def*}[Approximant]
+	Soit $(X,\,Y)$ un couple de parties disjointes de $A$.
+	
+	$(X,\,Y)$ est un approxiamant s'il existe un arbre optimal $H*$ tel que $X\subset H*$ et $Y\subset A\backslash H*$.
+\end{def*}
+
+\begin{rem*}
+	\hfill \begin{itemize}
+		\item $(\varnothing,\,\varnothing)$ est un approximant.
+		\item Le graphe $(S,\,X)$ est une forêt couvrante de $G$.
+		\item Si $|X|=n-1$, alors $X$ est un arbre optimal.
+		\item Si $|Y|=m-(n-1)$, alors $A\backslash Y$ est un arbre optimal.
+	\end{itemize}
+\end{rem*}
+
+\begin{def*}[Cocycle]
+	Soit $G=(S,\,A)$ un graphe connexe non orienté et soit $S'\subset S$.
+	
+	Le cocycle $\omega(S')$ associé à $S$ est l'ensemble des arêtes $\{x,\,y\}\in A$ telles que 
+	\[
+		x\in S'\textrm{ et }y\notin S'\textrm{ ou }x\notin S'\textrm{ et }y\in S'
+	\]
+\end{def*}
+
+\begin{thm*}[Règle des cocycles]
+	Soit $(X,\,Y)$ un approximant et soit $C$ un cocycle tel que pour toute arête $a=\{x,\,y\}\in A,\;a\in Y$ ou $a\in Z=A\backslash (X\cup Y)$.
+	
+	Soit $e$ une arête telle que $e\in Z$ de coût minimum. Alors $(X\cup\{e\},\,Y)$ est un approximant.
+\end{thm*}
+
+\begin{thm*}[Règle des cycles]
+	Soit $(X,\,Y)$ un approximant et soit $C$ un cocycle tel que pour toute arête $a=\{x,\,y\}\in A,\;a\in X$ ou $a\in Z=A\backslash (X\cup Y)$.
+	
+	Soit $e$ une arête telle que $e\in Z$ de coût maximum. Alors $(X,\,Y\cup\{e\})$ est un approximant.
+\end{thm*}
+
+\begin{algorithm}[H]
+	\DontPrintSemicolon
+	\Deb{
+		$(X,\,Y)\longleftarrow (\varnothing,\,\varnothing)$\;
+		$Z\longleftarrow A\backslash(X\cup Y)$\;
+		\Repeter{$|X|=n-1$ ou $|Y|=m-(n-1)$}{
+			\Si{Règle des cocyles applicable à un cycle $C$}{
+				$e$ : arête de coût minimum de $C\cap Z$\;
+				$(X,\,Y)\longleftarrow (X\cup\{e\},\,Y)$\;
+			}
+			\SinonSi{Règle des cycles applicable à un cycle $C$}{
+				$e$ : arête de coût maximum de $C\cap Z$\;
+				$(X,\,Y)\longleftarrow (X,\,Y\cup\{e\})$\;
+			}
+		}
+		\Retour{$X$}
+	}
+	\caption{Algorithme générique}
+\end{algorithm}
+
+\section{Algorithme de Prim} % (fold)
+
+\begin{algorithm}[H]
+	\DontPrintSemicolon
+	\Deb{
+		$(X,\,Y)\longleftarrow (\varnothing,\,\varnothing)$\;
+		$T\longleftarrow \{s\}$\;
+		\Pour{$k$ de 1 à $n-1$}{
+			$e=\{u,\,v\}$ : arête de coût minimum de $\omega(T)$\;
+			$(X,\,Y)\longleftarrow (X\cup\{e\},\,Y)$\;
+			$T\longleftarrow T\cup\{v\}$
+		}
+		\Retour{$X$}
+	}
+	\caption{Algorithme de Prim}
+\end{algorithm}
+
+\begin{comp*}[Algorithme de Prim]
+	En utilisant un tas : complexité en $\mathcal{O}((n+m)\log(n))$.
+\end{comp*}
+
+\section{Algorithme de Kruskal} % (fold)
+
+\begin{algorithm}[H]
+	\DontPrintSemicolon
+	\Deb{
+		$(X,\,Y)\longleftarrow (\varnothing,\,\varnothing)$\;
+		\lstinline!Trier!($A$)\;
+		\Pour{$k$ de 1 à $m$}{
+			$a_k\colon \{u_k,\,v_k\}$\;
+			\Si{$u_k$ et $v_k$ sont dans la même CFC}{
+				$(X,\,Y)\longleftarrow (X,\,Y\cup\{a_k\})$\;
+			}
+			\Sinon{
+				$(X,\,Y)\longleftarrow (X\cup\{a_k\},\,Y)$\;
+			}
+		}
+		\Retour{$X$}
+	}
+	\caption{Algorithme de Kruskal}
+\end{algorithm}
+
+\begin{comp*}[Algorithme de Kruskal]
+	En utilisant \lstinline!Union! et \lstinline!Find!, fonctions en $\mathcal{O}(\log(n))$, alors la complexité de l'algorithme de Kruskal est $\mathcal{O}(m\log(m)+m\log(n))=\mathcal{O}(m\log(m))$.
+\end{comp*}
+
+\end{document}
